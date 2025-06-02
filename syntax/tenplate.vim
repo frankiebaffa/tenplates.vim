@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: TenPlate Templating
 " Maintainer: Frankie Baffa
-" Version: 0.1.0
+" Version: 0.1.1
 
 " Configures the syntax highlighting for tenplate files.
 " Copyright (C) 2025  Frankie Baffa (frankiebaffa@gmail.com)

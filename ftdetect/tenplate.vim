@@ -1,7 +1,7 @@
 " Vim ftdetect file
 " Language: TenPlate Templating
 " Maintainer: Frankie Baffa
-" Version: 0.1.0
+" Version: 0.1.1
 
 " Automatically sets the filetype to tenplate when the file extension is
 " detected.
@@ -20,4 +20,7 @@
 " You should have received a copy of the GNU General Public License
 " along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-autocmd! BufNew,BufRead *.tenplate setf tenplate
+augroup tenplate_ft
+	au!
+	autocmd BufNew,BufNewFile,BufRead *.tenplate setlocal filetype=tenplate
+augroup END
