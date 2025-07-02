@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: TenPlate Templating
 " Maintainer: Frankie Baffa
-" Version: 0.1.1
+" Version: 0.1.2
 
 " Configures the syntax highlighting for tenplate files.
 " Copyright (C) 2025  Frankie Baffa (frankiebaffa@gmail.com)
@@ -23,7 +23,24 @@ if exists("b:current_syntax")
 	finish
 endif
 
-syn include @SQL syntax/sql.vim
+function GetSupplementalFiletype(file)
+	let full_extension = matchstr(a:file, '\..\+\.tenplate$')
+	if full_extension == ''
+		return ''
+	endif
+
+	return matchstr(full_extension, '\(\.\)\@<=.\+\(\.tenplate\)\@=')
+endfunction
+
+let filename = expand('%;e')
+
+let supp_filetype = GetSupplementalFiletype(filename)
+if supp_filetype != ''
+	exec 'runtime! syntax/' . supp_filetype . '.vim'
+	if exists("b:current_syntax")
+		unlet b:current_syntax
+	endif
+endif
 
 " Highlight links
 
