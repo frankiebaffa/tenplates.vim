@@ -1,7 +1,7 @@
 " Vim ftdetect file
 " Language: TenPlate Templating
 " Maintainer: Frankie Baffa
-" Version: 0.1.2
+" Version: 0.1.3
 
 " Automatically sets the filetype to tenplate when the file extension is
 " detected.
