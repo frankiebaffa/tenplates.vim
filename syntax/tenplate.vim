@@ -351,6 +351,9 @@ hi def link TenPlatePowEndTag TenPlateTag
 
 syntax cluster TenPlateTopLevel add=TenPlatePowTag,TenPlatePowEndTag
 
+syn keyword TenPlateReversedKeyword reversed contained
+hi def link TenPlateReversedKeyword TenPlateKeyword
+
 " Fordir tag
 " ex: {% fordir d in "./people" as d_loop %}{% include "./name.txt" /%}{% else %}Nobody{% /fordir %}
 
@@ -382,7 +385,7 @@ hi def link TenPlateFordir TenPlateKeyword
 
 syn region TenPlateFordirTag start=/{%\s*fordir\s*/ end=/\s*%}/
 			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,
-				\ TenPlateFordir,TenPlateFordirVariable
+				\ TenPlateFordir,TenPlateFordirVariable,TenPlateReversedKeyword
 			\ keepend
 
 syn match TenPlateFordirEndTag /{%\s*\/fordir\s*%}/
@@ -416,7 +419,8 @@ hi def link TenPlateForeach TenPlateKeyword
 
 syn region TenPlateForeachTag start=/{%\s*foreach\s*/ end=/\s*%}/
 			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,
-				\ TenPlateForeach,TenPlateForeachVariable
+				\ TenPlateForeach,TenPlateForeachVariable,
+				\ TenPlateReversedKeyword
 			\ keepend
 
 syn match TenPlateForeachEndTag /{%\s*\/foreach\s*%}/
@@ -456,7 +460,8 @@ hi def link TenPlateForfile TenPlateKeyword
 
 syn region TenPlateForfileTag start=/{%\s*forfile\s*/ end=/\s*%}/
 			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,
-				\ TenPlateForfile,TenPlateForfileVariable
+				\ TenPlateForfile,TenPlateForfileVariable,
+				\ TenPlateReversedKeyword
 			\ keepend
 
 syn match TenPlateForfileEndTag /{%\s*\/forfile\s*%}/
