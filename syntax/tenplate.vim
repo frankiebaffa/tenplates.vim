@@ -54,6 +54,26 @@ hi def link TenPlateSelfCloseTagEnd TenPlateTag
 syn match TenPlateBlockTagEnd '\s*%}' contained
 hi def link TenPlateBlockTagEnd TenPlateTag
 
+" Add tag
+" ex: {% add id %}0{% /add %}
+
+syn match TenPlateAddVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
+			\ nextgroup=TenPlateAddEquals
+hi def link TenPlateAddVariable TenPlateVariable
+
+syn keyword TenPlateAdd add contained
+hi def link TenPlateAdd TenPlateKeyword
+
+syn region TenPlateAddTag start=/{%\s*add\s*/ end=/\s*%}/
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateAdd,TenPlateAddVariable
+			\ keepend
+
+syn match TenPlateAddEndTag /{%\s*\/add\s*%}/
+			\ contains=TenPlateAdd,TenPlateEndTagSlash
+hi def link TenPlateAddEndTag TenPlateTag
+
+syntax cluster TenPlateTopLevel add=TenPlateAddTag,TenPlateAddEndTag
+
 " Assert tag
 " ex: {% assert :id == 0 || :name == "Somebody" /%}
 
@@ -158,6 +178,26 @@ syn region TenPlateCompileTag start=/{%\s*compile\s*/ end=/\s*\/%}/
 
 syntax cluster TenPlateTopLevel add=TenPlateCompileTag
 
+" Div tag
+" ex: {% sub id %}0{% /sub %}
+
+syn match TenPlateDivVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
+			\ nextgroup=TenPlateDivEquals
+hi def link TenPlateDivVariable TenPlateVariable
+
+syn keyword TenPlateDiv div contained
+hi def link TenPlateDiv TenPlateKeyword
+
+syn region TenPlateDivTag start=/{%\s*div\s*/ end=/\s*%}/
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateDiv,TenPlateDivVariable
+			\ keepend
+
+syn match TenPlateDivEndTag /{%\s*\/div\s*%}/
+			\ contains=TenPlateDiv,TenPlateEndTagSlash
+hi def link TenPlateDivEndTag TenPlateTag
+
+syntax cluster TenPlateTopLevel add=TenPlateDivTag,TenPlateDivEndTag
+
 " Exec tag
 " ex: {% exec `insert into db.tbl ( id, name ) values ( 1, 'Somebody' );` /%}
 " ex: {% exec "./do-insert.sql" /%}
@@ -217,6 +257,46 @@ syn region TenPlateExtendTag start=/{%\s*extend\s*/ end=/\s*\/%}/
 
 syntax cluster TenPlateTopLevel add=TenPlateExtendTag
 
+" Mod tag
+" ex: {% sub id %}0{% /sub %}
+
+syn match TenPlateModVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
+			\ nextgroup=TenPlateModEquals
+hi def link TenPlateModVariable TenPlateVariable
+
+syn keyword TenPlateMod mod contained
+hi def link TenPlateMod TenPlateKeyword
+
+syn region TenPlateModTag start=/{%\s*mod\s*/ end=/\s*%}/
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateMod,TenPlateModVariable
+			\ keepend
+
+syn match TenPlateModEndTag /{%\s*\/mod\s*%}/
+			\ contains=TenPlateMod,TenPlateEndTagSlash
+hi def link TenPlateModEndTag TenPlateTag
+
+syntax cluster TenPlateTopLevel add=TenPlateModTag,TenPlateModEndTag
+
+" Nth tag
+" ex: {% sub id %}0{% /sub %}
+
+syn match TenPlateNthVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
+			\ nextgroup=TenPlateNthEquals
+hi def link TenPlateNthVariable TenPlateVariable
+
+syn keyword TenPlateNth nth contained
+hi def link TenPlateNth TenPlateKeyword
+
+syn region TenPlateNthTag start=/{%\s*nth\s*/ end=/\s*%}/
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateNth,TenPlateNthVariable
+			\ keepend
+
+syn match TenPlateNthEndTag /{%\s*\/nth\s*%}/
+			\ contains=TenPlateNth,TenPlateEndTagSlash
+hi def link TenPlateNthEndTag TenPlateTag
+
+syntax cluster TenPlateTopLevel add=TenPlateNthTag,TenPlateNthEndTag
+
 " Path tag
 " ex: {% path "./file.tenplate" in directory /%}
 
@@ -250,6 +330,26 @@ syn region TenPlatePathTag start=/{%\s*path\s*/ end=/\s*\/%}/
 			\ keepend
 
 syntax cluster TenPlateTopLevel add=TenPlatePathTag
+
+" Pow tag
+" ex: {% sub id %}0{% /sub %}
+
+syn match TenPlatePowVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
+			\ nextgroup=TenPlatePowEquals
+hi def link TenPlatePowVariable TenPlateVariable
+
+syn keyword TenPlatePow pow contained
+hi def link TenPlatePow TenPlateKeyword
+
+syn region TenPlatePowTag start=/{%\s*pow\s*/ end=/\s*%}/
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlatePow,TenPlatePowVariable
+			\ keepend
+
+syn match TenPlatePowEndTag /{%\s*\/pow\s*%}/
+			\ contains=TenPlatePow,TenPlateEndTagSlash
+hi def link TenPlatePowEndTag TenPlateTag
+
+syntax cluster TenPlateTopLevel add=TenPlatePowTag,TenPlatePowEndTag
 
 " Fordir tag
 " ex: {% fordir d in "./people" as d_loop %}{% include "./name.txt" /%}{% else %}Nobody{% /fordir %}
@@ -506,6 +606,26 @@ syn region TenPlateIncludeTag start=/{%\s*include\s*/ end=/\s*\/%}/
 
 syntax cluster TenPlateTopLevel add=TenPlateIncludeTag
 
+" Mul tag
+" ex: {% sub id %}0{% /sub %}
+
+syn match TenPlateMulVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
+			\ nextgroup=TenPlateMulEquals
+hi def link TenPlateMulVariable TenPlateVariable
+
+syn keyword TenPlateMul mul contained
+hi def link TenPlateMul TenPlateKeyword
+
+syn region TenPlateMulTag start=/{%\s*mul\s*/ end=/\s*%}/
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateMul,TenPlateMulVariable
+			\ keepend
+
+syn match TenPlateMulEndTag /{%\s*\/mul\s*%}/
+			\ contains=TenPlateMul,TenPlateEndTagSlash
+hi def link TenPlateMulEndTag TenPlateTag
+
+syntax cluster TenPlateTopLevel add=TenPlateMulTag,TenPlateMulEndTag
+
 " Set tag
 " ex: {% set id %}0{% /set %}
 
@@ -525,6 +645,28 @@ syn match TenPlateSetEndTag /{%\s*\/set\s*%}/
 hi def link TenPlateSetEndTag TenPlateTag
 
 syntax cluster TenPlateTopLevel add=TenPlateSetTag,TenPlateSetEndTag
+
+" Sub tag
+" ex: {% sub id %}0{% /sub %}
+
+syn match TenPlateSubVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
+			\ nextgroup=TenPlateSubEquals
+hi def link TenPlateSubVariable TenPlateVariable
+
+syn keyword TenPlateSub sub contained
+hi def link TenPlateSub TenPlateKeyword
+
+syn region TenPlateSubTag start=/{%\s*sub\s*/ end=/\s*%}/
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateSub,TenPlateSubVariable
+			\ keepend
+
+syn match TenPlateSubEndTag /{%\s*\/sub\s*%}/
+			\ contains=TenPlateSub,TenPlateEndTagSlash
+hi def link TenPlateSubEndTag TenPlateTag
+
+syntax cluster TenPlateTopLevel add=TenPlateSubTag,TenPlateSubEndTag
+
+" Handle supplemental file types
 
 function GetSupplementalFiletype(file)
 	let full_extension = matchstr(a:file, '\..\+\.tenplate$')
