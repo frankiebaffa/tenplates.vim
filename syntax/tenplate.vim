@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: TenPlate Templating
 " Maintainer: Frankie Baffa
-" Version: 0.1.3
+" Version: 0.4.0
 
 " Configures the syntax highlighting for tenplate files.
 " Copyright (C) 2025  Frankie Baffa (frankiebaffa@gmail.com)
@@ -61,11 +61,15 @@ syn match TenPlateAddVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
 			\ nextgroup=TenPlateAddEquals
 hi def link TenPlateAddVariable TenPlateVariable
 
+syn region TenPlateAddLiteral start=/"/ skip=/\\"/ end=/"/ contained
+hi def link TenPlateAddLiteral TenPlateString
+
 syn keyword TenPlateAdd add contained
 hi def link TenPlateAdd TenPlateKeyword
 
 syn region TenPlateAddTag start=/{%\s*add\s*/ end=/\s*%}/
-			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateAdd,TenPlateAddVariable
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateAdd,
+				\ TenPlateAddVariable,TenPlateAddLiteral
 			\ keepend
 
 syn match TenPlateAddEndTag /{%\s*\/add\s*%}/
@@ -185,11 +189,15 @@ syn match TenPlateDivVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
 			\ nextgroup=TenPlateDivEquals
 hi def link TenPlateDivVariable TenPlateVariable
 
+syn region TenPlateDivLiteral start=/"/ skip=/\\"/ end=/"/ contained
+hi def link TenPlateDivLiteral TenPlateString
+
 syn keyword TenPlateDiv div contained
 hi def link TenPlateDiv TenPlateKeyword
 
 syn region TenPlateDivTag start=/{%\s*div\s*/ end=/\s*%}/
-			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateDiv,TenPlateDivVariable
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateDiv,
+				\ TenPlateDivVariable,TenPlateDivLiteral
 			\ keepend
 
 syn match TenPlateDivEndTag /{%\s*\/div\s*%}/
@@ -197,44 +205,6 @@ syn match TenPlateDivEndTag /{%\s*\/div\s*%}/
 hi def link TenPlateDivEndTag TenPlateTag
 
 syntax cluster TenPlateTopLevel add=TenPlateDivTag,TenPlateDivEndTag
-
-" Exec tag
-" ex: {% exec `insert into db.tbl ( id, name ) values ( 1, 'Somebody' );` /%}
-" ex: {% exec "./do-insert.sql" /%}
-
-syn match TenPlateExecArgEnd /)/ contained
-hi def link TenPlateExecArgEnd TenPlateSymbol
-
-syn match TenPlateExecComma /\s*,\s*/ contained
-			\ nextgroup=TenPlateExecArg,TenPlateExecLiteral
-hi def link TenPlateExecComma TenPlateSymbol
-
-syn region TenPlateExecLiteral start=/\s*"/ skip=/\\"/ end=/"\s*/ oneline keepend
-			\ contained
-			\ contains=TenPlatePathEscapeQuote
-			\ nextgroup=TenPlateExecComma,TenPlateExecArgEnd
-hi def link TenPlateExecLiteral TenPlateString
-
-syn match TenPlateExecArg /\s*[a-zA-Z_0-9.]\+\s*/ contained
-			\ nextgroup=TenPlateExecComma,TenPlateExecArgEnd
-hi def link TenPlateExecArg TenPlateVariable
-
-syn match TenPlateExecArgStart /(/ contained
-			\ nextgroup=TenPlateExecArg,TenPlateExecLiteral,TenPlateExecArgEnd
-hi def link TenPlateExecArgStart TenPlateSymbol
-
-syn match TenPlateExecFnName /[a-zA-Z_0-9.]\+/ contained nextgroup=TenPlateExecArgStart
-hi def link TenPlateExecFnName TenPlateVariable
-
-syn keyword TenPlateExec exec contained
-hi def link TenPlateExec TenPlateKeyword
-
-syn region TenPlateExecTag start=/{%\s*exec\s*/ end=/\s*\/%}/
-			\ contains=TenPlateTagStart,TenPlateSelfCloseTagEnd,
-				\ TenPlateExec,TenPlateExecFnName
-			\ keepend
-
-syntax cluster TenPlateTopLevel add=TenPlateExecTag
 
 " Extend tag
 " ex: {% extend "./template.tenplate" /%}
@@ -264,11 +234,15 @@ syn match TenPlateModVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
 			\ nextgroup=TenPlateModEquals
 hi def link TenPlateModVariable TenPlateVariable
 
+syn region TenPlateModLiteral start=/"/ skip=/\\"/ end=/"/ contained
+hi def link TenPlateModLiteral TenPlateString
+
 syn keyword TenPlateMod mod contained
 hi def link TenPlateMod TenPlateKeyword
 
 syn region TenPlateModTag start=/{%\s*mod\s*/ end=/\s*%}/
-			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateMod,TenPlateModVariable
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateMod,
+				\ TenPlateModVariable,TenPlateModLiteral
 			\ keepend
 
 syn match TenPlateModEndTag /{%\s*\/mod\s*%}/
@@ -338,11 +312,15 @@ syn match TenPlatePowVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
 			\ nextgroup=TenPlatePowEquals
 hi def link TenPlatePowVariable TenPlateVariable
 
+syn region TenPlatePowLiteral start=/"/ skip=/\\"/ end=/"/ contained
+hi def link TenPlatePowLiteral TenPlateString
+
 syn keyword TenPlatePow pow contained
 hi def link TenPlatePow TenPlateKeyword
 
 syn region TenPlatePowTag start=/{%\s*pow\s*/ end=/\s*%}/
-			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlatePow,TenPlatePowVariable
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlatePow,
+				\ TenPlatePowVariable,TenPlatePowLiteral
 			\ keepend
 
 syn match TenPlatePowEndTag /{%\s*\/pow\s*%}/
@@ -360,7 +338,7 @@ hi def link TenPlateReversedKeyword TenPlateKeyword
 syn match TenPlateFordirAsVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
 hi def link TenPlateFordirAsVariable TenPlateVariable
 
-syn keyword TenPlateFordirAs as contained nextgrouyp=TenPlateFordirAsVariable
+syn keyword TenPlateFordirAs as contained nextgroup=TenPlateFordirAsVariable
 hi def link TenPlateFordirAs TenPlateKeyword
 
 syn match TenPlateFordirInVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
@@ -400,7 +378,7 @@ syntax cluster TenPlateTopLevel add=TenPlateFordirTag,TenPlateFordirEndTag
 syn match TenPlateForeachAsVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
 hi def link TenPlateForeachAsVariable TenPlateVariable
 
-syn keyword TenPlateForeachAs as contained nextgrouyp=TenPlateForeachAsVariable
+syn keyword TenPlateForeachAs as contained nextgroup=TenPlateForeachAsVariable
 hi def link TenPlateForeachAs TenPlateKeyword
 
 syn match TenPlateForeachInVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
@@ -435,7 +413,7 @@ syntax cluster TenPlateTopLevel add=TenPlateForeachTag,TenPlateForeachEndTag
 syn match TenPlateForfileAsVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
 hi def link TenPlateForfileAsVariable TenPlateVariable
 
-syn keyword TenPlateForfileAs as contained nextgrouyp=TenPlateForfileAsVariable
+syn keyword TenPlateForfileAs as contained nextgroup=TenPlateForfileAsVariable
 hi def link TenPlateForfileAs TenPlateKeyword
 
 syn match TenPlateForfileInVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
@@ -469,6 +447,63 @@ syn match TenPlateForfileEndTag /{%\s*\/forfile\s*%}/
 hi def link TenPlateForfileEndTag TenPlateTag
 
 syntax cluster TenPlateTopLevel add=TenPlateForfileTag,TenPlateForfileEndTag
+
+" Forsplit tag
+" ex: {% forsplit number in "0,1,2,3,4,5" on "," as numloop %}{{ number }}{% /forsplit %}
+
+syn match TenPlateForsplitAsVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
+hi def link TenPlateForsplitAsVariable TenPlateVariable
+
+syn keyword TenPlateForsplitAs as contained nextgroup=TenPlateForsplitAsVariable
+hi def link TenPlateForsplitAs TenPlateKeyword
+
+syn match TenPlateForsplitOnVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained nextgroup=TenPlateForsplitAs
+hi def link TenPlateForsplitOnVariable TenPlateVariable
+
+syn cluster TenPlateForsplitOnValue contains=TenPlateForsplitOnVariable
+
+syn region TenPlateForsplitOnString start=/\s*"/ skip=/\\"/ end=/"\s*/ contained
+			\ nextgroup=TenPlateForSplitAs
+hi def link TenPlateForsplitOnString TenPlateString
+
+syn cluster TenPlateForsplitOnValue add=TenPlateForsplitOnString
+
+syn keyword TenPlateForsplitOn on contained nextgroup=@TenPlateForsplitOnValue
+hi def link TenPlateForsplitOn TenPlateKeyword
+
+syn match TenPlateForsplitInVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
+			\ nextgroup=TenPlateForsplitOn
+hi def link TenPlateForsplitInVariable TenPlateVariable
+
+syn cluster TenPlateForsplitInValue contains=TenPlateForsplitInVariable
+
+syn region TenPlateForsplitInString start=/\s*"/ skip=/\\"/ end=/"\s*/ contained
+			\ nextgroup=TenPlateForsplitOn
+hi def link TenPlateForsplitInString TenPlateString
+
+syn cluster TenPlateForsplitInValue add=TenPlateForsplitInString
+
+syn keyword TenPlateForsplitIn in contained nextgroup=@TenPlateForsplitInValue
+hi def link TenPlateForsplitIn TenPlateKeyword
+
+syn match TenPlateForsplitVariable /\s*[a-zA-Z0-9_\-.]\+\s*/ contained
+			\ nextgroup=TenPlateForsplitIn
+hi def link TenPlateForsplitVariable TenPlateVariable
+
+syn keyword TenPlateForsplit forsplit contained
+hi def link TenPlateForsplit TenPlateKeyword
+
+syn region TenPlateForsplitTag start=/{%\s*forsplit\s*/ end=/\s*%}/
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,
+				\ TenPlateForsplit,TenPlateForsplitVariable,
+				\ TenPlateReversedKeyword
+			\ keepend
+
+syn match TenPlateForsplitEndTag /{%\s*\/forsplit\s*%}/
+			\ contains=TenPlateForsplit,TenPlateEndTagSlash
+hi def link TenPlateForsplitEndTag TenPlateTag
+
+syntax cluster TenPlateTopLevel add=TenPlateForsplitTag,TenPlateForsplitEndTag
 
 " Else tag
 " ex: {% else %}
@@ -520,14 +555,27 @@ syntax cluster TenPlateTopLevel add=TenPlateFnTag,TenPlateFnEndTag
 
 " Get
 
+syn region TenPlateGetFnString start=/"/ skip=/\\"/ end=/"/ contained
+hi def link TenPlateGetFnString TenPlateString
+
+syn match TenPlateGetFnArgument /[a-zA-Z_0-9.]\+/ contained
+hi def link TenPlateGetFnArgument TenPlateVariable
+
+syn region TenPlateGetFn matchgroup=TenPlateTag start=/(/ end=/)/ contained
+			\ contains=TenPlateGetFnArgument,TenPlateGetFnComma,
+				\ TenPlateGetFnString
+hi def link TenPlateGetFn TenPlateSymbol
+
 syn match TenPlateGetContent /CONTENT/ contained
 hi def link TenPlateGetContent TenPlateKeyword
 
-syn match TenPlateGetVariable /[a-zA-Z_0-9.]\+/ contained contains=TenPlateGetContent
+syn match TenPlateGetVariable /[a-zA-Z_0-9.]\+/ contained
+			\ contains=TenPlateGetContent
+			\ nextgroup=TenPlateGetFn
 hi def link TenPlateGetVariable TenPlateVariable
 
-syn region TenPlateGetTag start=/{{/ skip=/\\}}/ end=/}}/
-			\ contains=TenPlateGetVariable
+syn region TenPlateGetTag matchgroup=TenPlateSymbol start=/{{/ skip=/\\}}/ end=/}}/
+			\ contains=TenPlateGetFnName,TenPlateGetVariable
 hi def link TenPlateGetTag TenPlateSymbol
 
 syntax cluster TenPlateTopLevel add=TenPlateGetTag
@@ -618,11 +666,15 @@ syn match TenPlateMulVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
 			\ nextgroup=TenPlateMulEquals
 hi def link TenPlateMulVariable TenPlateVariable
 
+syn region TenPlateMulLiteral start=/"/ skip=/\\"/ end=/"/ contained
+hi def link TenPlateMulLiteral TenPlateString
+
 syn keyword TenPlateMul mul contained
 hi def link TenPlateMul TenPlateKeyword
 
 syn region TenPlateMulTag start=/{%\s*mul\s*/ end=/\s*%}/
-			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateMul,TenPlateMulVariable
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateMul,
+				\ TenPlateMulVariable,TenPlateMulLiteral
 			\ keepend
 
 syn match TenPlateMulEndTag /{%\s*\/mul\s*%}/
@@ -658,11 +710,15 @@ syn match TenPlateSubVariable /\s*[a-zA-Z]\%([a-zA-Z0-9_\-]\)*\s*/ contained
 			\ nextgroup=TenPlateSubEquals
 hi def link TenPlateSubVariable TenPlateVariable
 
+syn region TenPlateSubLiteral start=/"/ skip=/\\"/ end=/"/ contained
+hi def link TenPlateSubLiteral TenPlateString
+
 syn keyword TenPlateSub sub contained
 hi def link TenPlateSub TenPlateKeyword
 
 syn region TenPlateSubTag start=/{%\s*sub\s*/ end=/\s*%}/
-			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateSub,TenPlateSubVariable
+			\ contains=TenPlateTagStart,TenPlateBlockTagEnd,TenPlateSub,
+				\ TenPlateSubVariable,TenPlateSubLiteral
 			\ keepend
 
 syn match TenPlateSubEndTag /{%\s*\/sub\s*%}/
